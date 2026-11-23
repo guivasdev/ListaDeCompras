@@ -14,6 +14,7 @@ import { useAppTheme } from "@/theme/context"
 
 import type { AppStackParamList, NavigationProps } from "./navigationTypes"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
+import { HomeScreen } from "@/screens/HomeScreen"
 
 /**
  * This is a list of all the route names that will exit the app if the back button
@@ -32,14 +33,14 @@ const AppStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
-        navigationBarColor: colors.background,
+        headerShown: true,
+        navigationBarHidden: false,
         contentStyle: {
-          backgroundColor: colors.background,
+          backgroundColor: colors.error,
         },
       }}
     >
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="Home" component={HomeScreen} />
       {/** 🔥 Your screens go here */}
       {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
