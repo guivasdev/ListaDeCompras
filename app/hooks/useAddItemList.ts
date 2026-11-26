@@ -1,4 +1,5 @@
 import { useListaContext } from "@/context/ListaContext";
+import { save } from "@/utils/storage";
 import { useState } from "react";
 
 export interface ItemListaCompra {
@@ -15,7 +16,9 @@ const useAddItemList = () => {
     function gerenciarAdicaoItem() {
 
         validarCampoItem(entradaCampoItem);
-        inserirItemLista(entradaCampoItem);
+        const listaAtualizada = inserirItemLista(entradaCampoItem)
+
+        salvarItemDaLista(listaAtualizada);
         setEntradaCampoItem('')
     }
 
@@ -32,8 +35,18 @@ const useAddItemList = () => {
             nomeItemLista: entradaCampoItem,
             estaMarcadoItemLista: false
         }
-        setListaItens([...listaItens, item])
-        
+
+        const listaAtualizada = [...listaItens, item]
+
+        setListaItens(listaAtualizada)
+
+        return listaAtualizada
+    }
+
+    function salvarItemDaLista(listaAtualizada: ItemListaCompra[]) {
+
+        save('chaveListaDeCompras', listaAtualizada)
+        console.log('lista: ' + listaAtualizada)
     }
 
     return {

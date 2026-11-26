@@ -1,3 +1,4 @@
+import { load } from '@/utils/storage';
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface ItemListaCompra {
@@ -14,8 +15,9 @@ interface ListaContextData {
 const ListaContext = createContext<ListaContextData>({} as ListaContextData);
 
 export function ListaProvider({ children }: { children: ReactNode }) {
-  const [listaItens, setListaItens] = useState<ItemListaCompra[]>([]);
-
+  const [listaItens, setListaItens] = useState<ItemListaCompra[]>(
+    () => load<ItemListaCompra[]>("chaveListaDeCompras") ?? []
+  )
   return (
     <ListaContext.Provider value={{ listaItens, setListaItens }}>
       {children}

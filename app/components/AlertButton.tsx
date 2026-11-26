@@ -1,10 +1,8 @@
-import { Alert, StyleProp, TextStyle, View, ViewStyle } from "react-native"
+import { Alert, StyleProp, View, ViewStyle } from "react-native"
 import { useAppTheme } from "@/theme/context"
 import type { ThemedStyle } from "@/theme/types"
-import { Text } from "@/components/Text"
 import { Button } from "./Button"
 import { Icon } from "./Icon"
-import useDeleteItemList from "@/hooks/useDeleteItemList"
 
 export interface AlertButtonProps {
   style?: StyleProp<ViewStyle>

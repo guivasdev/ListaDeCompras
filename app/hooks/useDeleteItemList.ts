@@ -1,5 +1,6 @@
 import { useListaContext } from "@/context/ListaContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { save } from "@/utils/storage";
 import { ItemListaCompra } from "./useAddItemList";
 
 const useDeleteItemList = () => {
@@ -15,26 +16,36 @@ const useDeleteItemList = () => {
 
     function gerenciarExclusaoItemLista() {
         const listaDeIndices = buscarIndiceItemLista()
-        removerItemLista(listaDeIndices)
+        const listaAtualizada = removerItemLista(listaDeIndices)
+        salvarItemDaLista(listaAtualizada);
     }
 
     function buscarIndiceItemLista() {
-
         return listaItens.filter((item) => selecionarCheckbox.includes(item.idItemLista))
     }
 
     function removerItemLista(indiceItemLista: ItemListaCompra[]) {
 
-        setListaItens((listaAtual) =>
-            listaAtual.filter(
+        const listaAtualizada =
+            listaItens.filter(
                 (item) =>
                     !indiceItemLista.some(
                         (itemParaRemover) => itemParaRemover.idItemLista === item.idItemLista
                     )
-            ));
+            );
+
+        setListaItens(listaAtualizada)
 
         setSelecionarCheckbox([])
+
+        return listaAtualizada
     }
+
+    function salvarItemDaLista(listaAtualizada: ItemListaCompra[]) {
+        save('chaveListaDeCompras', listaAtualizada)
+        console.log('lista: ' + listaAtualizada)
+    }
+
 
     return {
         gerenciarExclusaoItemLista,
