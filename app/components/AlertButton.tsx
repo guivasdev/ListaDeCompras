@@ -4,13 +4,15 @@ import type { ThemedStyle } from "@/theme/types"
 import { Text } from "@/components/Text"
 import { Button } from "./Button"
 import { Icon } from "./Icon"
+import useDeleteItemList from "@/hooks/useDeleteItemList"
 
 export interface AlertButtonProps {
   style?: StyleProp<ViewStyle>
+  gerenciarExclusaoItemLista: () => void
+
 }
 
-export const AlertButton = (props: AlertButtonProps) => {
-  const { style } = props
+export const AlertButton = ({ gerenciarExclusaoItemLista, style }: AlertButtonProps) => {
   const $styles = [$container, style]
   const { themed } = useAppTheme();
 
@@ -21,7 +23,10 @@ export const AlertButton = (props: AlertButtonProps) => {
         onPress: () => console.log('NÃO Pressed'),
         style: 'cancel',
       },
-      { text: 'SIM', onPress: () => console.log('SIM Pressed') },
+      {
+        text: 'SIM', onPress: () =>
+          gerenciarExclusaoItemLista()
+      },
     ]);
   return (
     <View style={$styles}>

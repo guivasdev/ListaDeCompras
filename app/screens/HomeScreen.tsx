@@ -15,13 +15,13 @@ import { useListaContext } from "@/context/ListaContext"
 import useEditItemList from "@/hooks/useEditItemList"
 import { $centeredView, $modalView, $modalInput, $modalButton, $modalButtonText } from "@/styles/modelStyles"
 import { $inputWrapper, $addButton, $list, $listContent, $checkboxContainer, $listItem, $listItemText } from "@/styles/listStyles"
+import useDeleteItemList from "@/hooks/useDeleteItemList"
 
 interface HomeScreenProps extends AppStackScreenProps<"Home"> { }
 
 export const HomeScreen: FC<HomeScreenProps> = () => {
   const { themed } = useAppTheme()
 
-  const [selecionarCheckbox, setSelecionarCheckbox] = useState<string[]>([]);
   const { listaItens } = useListaContext();
 
   const { entradaCampoItem, setEntradaCampoItem,
@@ -30,14 +30,7 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
   const { entradaCampoItemEdicao, setEntradaCampoItemEdicao, estadoEditarItemLista,
     gerenciarEdicaoItem, iniciarEdicaoItem, setEstadoEditarItemLista } = useEditItemList()
 
-  function manipularSelecaoCheckbox(idItemLista: string) {
-
-    setSelecionarCheckbox((prev) =>
-      prev.includes(idItemLista)
-        ? prev.filter((itemId) => itemId !== idItemLista)
-        : [...prev, idItemLista]
-    );
-  }
+  const { manipularSelecaoCheckbox, selecionarCheckbox, gerenciarExclusaoItemLista } = useDeleteItemList()
 
   return (
     <Screen
@@ -49,7 +42,7 @@ export const HomeScreen: FC<HomeScreenProps> = () => {
 
       {selecionarCheckbox.length > 0 &&
         <View style={themed($header)}>
-          <AlertButton />
+          <AlertButton gerenciarExclusaoItemLista={gerenciarExclusaoItemLista} />
         </View>
       }
       {/* Cabeçalho / Inserção de item */}

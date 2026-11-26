@@ -20,7 +20,6 @@ const useAddItemList = () => {
     }
 
     function validarCampoItem(entradaCampoItem: string) {
-        console.log(entradaCampoItem)
         if (entradaCampoItem.length == 0 || entradaCampoItem.trim().length == 0)
             throw new Error("Erro em validar campo de Item");
     }
@@ -28,7 +27,6 @@ const useAddItemList = () => {
     function inserirItemLista(entradaCampoItem: string) {
 
         const idItemLista = Date.now();
-        console.log('dkgj')
         const item: ItemListaCompra = {
             idItemLista: idItemLista.toString(),
             nomeItemLista: entradaCampoItem,
